@@ -25,6 +25,9 @@ namespace l_chika_pwm
         public MainPage()
         {
             this.InitializeComponent();
+            LedPwm = new LedPwmModel();
         }
+
+        public LedPwmModel LedPwm { get; private set; }
     }
 }
