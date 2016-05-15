@@ -1,0 +1,8 @@
+﻿<Application
+    x:Class="bme280_visualize.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:bme280_visualize"
+    RequestedTheme="Light">
+
+</Application>
