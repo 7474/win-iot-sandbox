@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "l-chika-pwm", "l-chika-pwm\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PwmSoftware", "BusProviders\PWM\PwmSoftware\PwmSoftware.vcxproj", "{07864646-FA68-4C58-84CF-9470B0428301}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bme280-visualize", "bme280-visualize\bme280-visualize.csproj", "{022341B8-D7FF-4815-94B4-BE32F5A325DB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
@@ -47,6 +49,24 @@ Global
 		{07864646-FA68-4C58-84CF-9470B0428301}.Release|x64.Build.0 = Release|x64
 		{07864646-FA68-4C58-84CF-9470B0428301}.Release|x86.ActiveCfg = Release|Win32
 		{07864646-FA68-4C58-84CF-9470B0428301}.Release|x86.Build.0 = Release|Win32
+		{022341B8-D7FF-4815-94B4-BE32F5A325DB}.Debug|ARM.ActiveCfg = Debug|ARM
+		{022341B8-D7FF-4815-94B4-BE32F5A325DB}.Debug|ARM.Build.0 = Debug|ARM
+		{022341B8-D7FF-4815-94B4-BE32F5A325DB}.Debug|ARM.Deploy.0 = Debug|ARM
+		{022341B8-D7FF-4815-94B4-BE32F5A325DB}.Debug|x64.ActiveCfg = Debug|x64
+		{022341B8-D7FF-4815-94B4-BE32F5A325DB}.Debug|x64.Build.0 = Debug|x64
+		{022341B8-D7FF-4815-94B4-BE32F5A325DB}.Debug|x64.Deploy.0 = Debug|x64
+		{022341B8-D7FF-4815-94B4-BE32F5A325DB}.Debug|x86.ActiveCfg = Debug|x86
+		{022341B8-D7FF-4815-94B4-BE32F5A325DB}.Debug|x86.Build.0 = Debug|x86
+		{022341B8-D7FF-4815-94B4-BE32F5A325DB}.Debug|x86.Deploy.0 = Debug|x86
+		{022341B8-D7FF-4815-94B4-BE32F5A325DB}.Release|ARM.ActiveCfg = Release|ARM
+		{022341B8-D7FF-4815-94B4-BE32F5A325DB}.Release|ARM.Build.0 = Release|ARM
+		{022341B8-D7FF-4815-94B4-BE32F5A325DB}.Release|ARM.Deploy.0 = Release|ARM
+		{022341B8-D7FF-4815-94B4-BE32F5A325DB}.Release|x64.ActiveCfg = Release|x64
+		{022341B8-D7FF-4815-94B4-BE32F5A325DB}.Release|x64.Build.0 = Release|x64
+		{022341B8-D7FF-4815-94B4-BE32F5A325DB}.Release|x64.Deploy.0 = Release|x64
+		{022341B8-D7FF-4815-94B4-BE32F5A325DB}.Release|x86.ActiveCfg = Release|x86
+		{022341B8-D7FF-4815-94B4-BE32F5A325DB}.Release|x86.Build.0 = Release|x86
+		{022341B8-D7FF-4815-94B4-BE32F5A325DB}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
