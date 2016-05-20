@@ -4,12 +4,15 @@
       xmlns:local="using:bme280_visualize"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:oxy="using:OxyPlot.Windows"
       mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <StackPanel Orientation="Vertical">
+            <oxy:PlotView  Model="{x:Bind Bme280.Plot}"
+                           Height="320" />
             <StackPanel Orientation="Vertical">
-                <TextBlock Text="Temperature"
+                <!--<TextBlock Text="Temperature"
                            HorizontalAlignment="Left"
                            VerticalAlignment="Top" />
                 <TextBlock Text="{x:Bind Bme280.SensorData.Temperature, Mode=OneWay, FallbackValue=None}"
@@ -29,7 +32,7 @@
                 <TextBlock Text="{x:Bind Bme280.SensorData.Pressure, Mode=OneWay, FallbackValue=None}"
                            HorizontalAlignment="Left"
                            VerticalAlignment="Top"
-                           Margin="20,0,0,0" />
+                           Margin="20,0,0,0" />-->
                 <TextBlock Text="SensorData"
                            HorizontalAlignment="Left"
                            VerticalAlignment="Top" />
