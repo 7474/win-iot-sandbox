@@ -65,14 +65,24 @@ namespace bme280_visualize
             };
             plot.Axes.Add(new LinearAxis()
             {
-                Key = "To100",
+                Key = "Temperature",
+                Title = "Temperature",
+                Position = AxisPosition.Left,
+                Minimum = 0,
+                Maximum = 50
+            });
+            plot.Axes.Add(new LinearAxis()
+            {
+                Key = "Humidity",
+                Title = "Humidity",
                 Position = AxisPosition.Left,
                 Minimum = 0,
                 Maximum = 100
             });
             plot.Axes.Add(new LinearAxis()
             {
-                Key = "To1100",
+                Key = "Pressure",
+                Title = "Pressure",
                 Position = AxisPosition.Right,
                 Minimum = 900,
                 Maximum = 1100
@@ -94,7 +104,7 @@ namespace bme280_visualize
                     return new DataPoint(data.PlotTimestamp, data.Temperature);
                 },
                 ItemsSource = _plotLogs,
-                YAxisKey = "To100"
+                YAxisKey = "Temperature"
             });
             //plot.Series.Add(new LineSeries()
             //{
@@ -110,7 +120,7 @@ namespace bme280_visualize
                 DataFieldX = "PlotTimestamp",
                 DataFieldY = "Humidity",
                 ItemsSource = _plotLogs,
-                YAxisKey = "To100"
+                YAxisKey = "Humidity"
             });
             plot.Series.Add(new LineSeries()
             {
@@ -124,7 +134,7 @@ namespace bme280_visualize
                 //DataFieldX = "PlotTimestamp",
                 //DataFieldY = "Pressure",
                 ItemsSource = _plotLogs,
-                YAxisKey = "To1100"
+                YAxisKey = "Pressure"
             });
             Plot = plot;
         }
