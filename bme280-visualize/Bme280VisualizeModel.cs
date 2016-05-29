@@ -19,14 +19,6 @@ namespace bme280_visualize
                 SetProperty(_plot, value, () => _plot = value);
             }
         }
-        public ICollection<Bme280Data> Logs
-        {
-            get { return _logs; }
-            private set
-            {
-                SetProperty(_logs, value, () => _logs = value);
-            }
-        }
         public Bme280Data SensorData
         {
             get { return _bme280Data; }
@@ -35,29 +27,24 @@ namespace bme280_visualize
                 SetProperty(_bme280Data, value, () => _bme280Data = value);
             }
         }
+        public TimeSpan SummaryUnit { get; private set; }
+        public TimeSpan DisplayUnit { get; private set; }
 
         private Bme280I2c _bme280;
         private Bme280Data _bme280Data;
-        // XXX グラフ表示設定は色々いじる
         private PlotModel _plot;
         private ICollection<Bme280PlotData> _plotLogs;
-        //private ICollection<DataPoint> _plotTemperatures;
         private ICollection<Bme280Data> _plotTargets;
-        private ICollection<Bme280Data> _logs;
 
-        public Bme280VisualizeModel(Bme280I2c bme280)
+        public Bme280VisualizeModel(Bme280I2c bme280, TimeSpan summaryUnit, TimeSpan displayUnit)
         {
             SensorData = new Bme280Data(0, 0, 0, DateTime.Now);
-            _logs = new List<Bme280Data>();
+            SummaryUnit = summaryUnit;
+            DisplayUnit = displayUnit;
             _bme280 = bme280;
             _bme280.UpdateSensorData += new Bme280UpdateEventHaldler(SensorUpdated);
             //
             _plotLogs = new List<Bme280PlotData>();
-            //Enumerable.Range(10, 20).ToList().ForEach(i =>
-            //{
-            //    _plotLogs.Add(
-            //        new Bme280PlotData(i, i + 20, i * 10, DateTime.Now.AddMinutes(i)));
-            //});
             _plotTargets = new List<Bme280Data>();
             var plot = new PlotModel()
             {
@@ -65,17 +52,27 @@ namespace bme280_visualize
             };
             plot.Axes.Add(new LinearAxis()
             {
-                Key = "To100",
+                Key = "Temperature",
+                Title = "Temperature(℃)",
+                Position = AxisPosition.Left,
+                Minimum = 0,
+                Maximum = 50
+            });
+            plot.Axes.Add(new LinearAxis()
+            {
+                Key = "Humidity",
+                Title = "Humidity(%)",
                 Position = AxisPosition.Left,
                 Minimum = 0,
                 Maximum = 100
             });
             plot.Axes.Add(new LinearAxis()
             {
-                Key = "To1100",
+                Key = "Pressure",
+                Title = "Pressure(Pascal)",
                 Position = AxisPosition.Right,
-                Minimum = 900,
-                Maximum = 1100
+                Minimum = 90000,
+                Maximum = 110000
             });
             plot.Axes.Add(new DateTimeAxis()
             {
@@ -88,43 +85,26 @@ namespace bme280_visualize
             plot.Series.Add(new LineSeries()
             {
                 Title = "Temperature",
-                Mapping = (x) =>
-                {
-                    var data = x as Bme280PlotData;
-                    return new DataPoint(data.PlotTimestamp, data.Temperature);
-                },
+                DataFieldX = "PlotTimestamp",
+                DataFieldY = "Temperature",
                 ItemsSource = _plotLogs,
-                YAxisKey = "To100"
+                YAxisKey = "Temperature"
             });
-            //plot.Series.Add(new LineSeries()
-            //{
-            //    Title = "Temperature-DataField",
-            //    DataFieldX = "PlotTimestamp",
-            //    DataFieldY = "Temperature",
-            //    ItemsSource = _plotLogs,
-            //    YAxisKey = "To100"
-            //});
             plot.Series.Add(new LineSeries()
             {
                 Title = "Humidity",
                 DataFieldX = "PlotTimestamp",
                 DataFieldY = "Humidity",
                 ItemsSource = _plotLogs,
-                YAxisKey = "To100"
+                YAxisKey = "Humidity"
             });
             plot.Series.Add(new LineSeries()
             {
                 Title = "Pressure",
-                Mapping = (x) =>
-                {
-                    var data = x as Bme280PlotData;
-                    // パスカル -> ヘクトパスカル
-                    return new DataPoint(data.PlotTimestamp, data.Pressure / 100);
-                },
-                //DataFieldX = "PlotTimestamp",
-                //DataFieldY = "Pressure",
+                DataFieldX = "PlotTimestamp",
+                DataFieldY = "Pressure",
                 ItemsSource = _plotLogs,
-                YAxisKey = "To1100"
+                YAxisKey = "Pressure"
             });
             Plot = plot;
         }
@@ -135,9 +115,8 @@ namespace bme280_visualize
             // XXX 生ログをどうにかする
             //_logs.Add(e.Data);
             _plotTargets.Add(e.Data);
-            // XXX タイムスライスにする
-            //if (_plotTargets.Count >= 60)
-            if (_plotTargets.Count >= 5)
+
+            if (_plotTargets.First().Timestamp + SummaryUnit <= e.Data.Timestamp)
             {
                 _plotLogs.Add(
                     new Bme280PlotData(
@@ -147,10 +126,12 @@ namespace bme280_visualize
                     _plotTargets.Select(x => x.Timestamp).Last()
                     ));
                 _plotTargets.Clear();
-                if (_plotLogs.Count > 600)
+
+                while (_plotLogs.Last().Timestamp - _plotLogs.First().Timestamp > DisplayUnit)
                 {
                     _plotLogs.Remove(_plotLogs.First());
                 }
+
                 // http://oxyplot.codeplex.com/wikipage?title=WpfExample2
                 // XXX Note that the Plot control is not observing changes in your dataset.
                 //RaisePropertyChanged("Plot");
