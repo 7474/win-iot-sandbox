@@ -29,7 +29,8 @@ namespace bme280_visualize
             // XXX コンストラクタで非同期処理ってどうするのが普通なの？
             // XXX 初期化とかもVMの責務？
             var bme280i2c = new Bme280I2c("I2C1", 0x76, 1000);
-            Bme280 = new Bme280VisualizeModel(bme280i2c);
+            Bme280 = new Bme280VisualizeModel(
+                bme280i2c, TimeSpan.FromMinutes(1), TimeSpan.FromDays(1));
             Initialize(bme280i2c);
         }
 
