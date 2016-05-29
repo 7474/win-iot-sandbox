@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.IoT.DeviceCore.Pwm;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -35,7 +36,8 @@ namespace l_chika_pwm
         public LedPwmModel()
         {
             // XXX 取り方の整理（引数で渡すなど）
-            var provider = PwmSoftware.PwmProviderSoftware.GetPwmProvider();
+            //var provider = PwmSoftware.PwmProviderSoftware.GetPwmProvider();
+            var provider = new PwmProviderManager();
             var controllers = PwmController.GetControllersAsync(provider).AsTask().Result;
             var controller = controllers.FirstOrDefault();
             controller.SetDesiredFrequency(100.0);
