@@ -36,11 +36,14 @@ namespace bme280_visualize
         private ICollection<Bme280PlotData> _plotLogs;
         private ICollection<Bme280Data> _plotTargets;
 
-        public Bme280VisualizeModel(Bme280I2c bme280, TimeSpan summaryUnit, TimeSpan displayUnit)
+        private IBme280Logger _logger;
+
+        public Bme280VisualizeModel(Bme280I2c bme280, TimeSpan summaryUnit, TimeSpan displayUnit, IBme280Logger logger)
         {
             SensorData = new Bme280Data(0, 0, 0, DateTime.Now);
             SummaryUnit = summaryUnit;
             DisplayUnit = displayUnit;
+            _logger = logger;
             _bme280 = bme280;
             _bme280.UpdateSensorData += new Bme280UpdateEventHaldler(SensorUpdated);
             //
@@ -112,8 +115,7 @@ namespace bme280_visualize
         private void SensorUpdated(object sendor, Bme280DataUpdateEventArgs e)
         {
             SensorData = e.Data;
-            // XXX 生ログをどうにかする
-            //_logs.Add(e.Data);
+            _logger.Log(e.Data);
             _plotTargets.Add(e.Data);
 
             if (_plotTargets.First().Timestamp + SummaryUnit <= e.Data.Timestamp)
