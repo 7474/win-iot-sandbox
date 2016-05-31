@@ -10,7 +10,7 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <StackPanel Orientation="Vertical">
             <oxy:PlotView  Model="{x:Bind Bme280.Plot}"
-                           Height="320" />
+                           Height="480" />
             <StackPanel Orientation="Vertical">
                 <!--<TextBlock Text="Temperature"
                            HorizontalAlignment="Left"

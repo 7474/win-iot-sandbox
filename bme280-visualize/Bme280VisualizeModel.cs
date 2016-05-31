@@ -58,24 +58,24 @@ namespace bme280_visualize
                 Key = "Temperature",
                 Title = "Temperature(℃)",
                 Position = AxisPosition.Left,
-                Minimum = 0,
-                Maximum = 50
+                //Minimum = 0,
+                //Maximum = 50
             });
             plot.Axes.Add(new LinearAxis()
             {
                 Key = "Humidity",
                 Title = "Humidity(%)",
                 Position = AxisPosition.Left,
-                Minimum = 0,
-                Maximum = 100
+                //Minimum = 0,
+                //Maximum = 100
             });
             plot.Axes.Add(new LinearAxis()
             {
                 Key = "Pressure",
                 Title = "Pressure(Pascal)",
                 Position = AxisPosition.Right,
-                Minimum = 90000,
-                Maximum = 110000
+                //Minimum = 90000,
+                //Maximum = 110000
             });
             plot.Axes.Add(new DateTimeAxis()
             {
