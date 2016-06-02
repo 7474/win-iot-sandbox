@@ -99,7 +99,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Bme280.cs" />
     <Compile Include="Bme280Logger.cs" />
     <Compile Include="Bme280VisualizeModel.cs" />
     <Compile Include="MainPage.xaml.cs">
@@ -138,6 +137,12 @@
     <SDKReference Include="WindowsIoT, Version=10.0.10240.0">
       <Name>Windows IoT Extensions for the UWP %28WindowsIoT, Version=10.0.10240.0%29</Name>
     </SDKReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\win-bme280\Bme280Uwp\Bme280Uwp.csproj">
+      <Project>{7536dcc8-ab54-4422-8ba9-44f0961949b1}</Project>
+      <Name>Bme280Uwp</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

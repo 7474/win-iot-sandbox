@@ -1,4 +1,5 @@
-﻿using OxyPlot;
+﻿using Bme280Uwp;
+using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
 using System;
