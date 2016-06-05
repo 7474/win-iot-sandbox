@@ -6,79 +6,73 @@ using System.Threading.Tasks;
 using Bme280Uwp;
 using Windows.Storage;
 using System.IO;
+using System.Diagnostics;
 
 namespace bme280_repository
 {
     public class Bme280LocalRepository : IBme280Repository
     {
         public string LogFolder { get; private set; }
-
         private StorageFolder _folder;
 
-        public Bme280LocalRepository(string logFolder)
+        public Bme280LocalRepository(string logFolder = "bme280log")
         {
             LogFolder = logFolder;
+            // XXX UWP だと複数のアプリケーションが同一のファイルを見るのは難しい？
+            //_folder = KnownFolders.DocumentsLibrary;
+            //_folder = ApplicationData.Current.SharedLocalFolder;
             _folder = ApplicationData.Current.LocalFolder;
         }
 
-        public async void Log(Bme280Data data)
+        public async Task Add(Bme280Data data)
         {
-            var fileName = "bme280-" + data.Timestamp.ToString("yyyyMMdd") + ".csv";
             try
             {
-                // XXX なんでもかんでも非同期にすればいいってものでもないと思う、通常のシーケンシャルな処理にした方がいいか？
-                var file = await _folder.CreateFileAsync(
-                    Path.Combine(LogFolder, fileName), CreationCollisionOption.OpenIfExists);
-                await FileIO.AppendLinesAsync(file, new string[] { Format(data) });
+                var file = await GetFile(data.Timestamp);
+                await FileIO.AppendLinesAsync(file, new string[] { ToCsv(data) });
             }
             catch (Exception ex)
             {
-                // XXX I/O に失敗したとおぼわしき時にTMPファイルが残っていたがリカバリ可能なのか？
                 // XXX ログを吐くのが結構面倒くさい
-                // https://code.msdn.microsoft.com/Logging-Sample-for-Windows-ecd3622f
                 Debug.WriteLine(ex);
             }
         }
 
-        public Task Add(Bme280Data data)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<IEnumerable<Bme280Data>> GetList(DateTime from, DateTime to)
         {
-            // XXX むしろ見づらい気がする
-            return Enumerable.Range(0, to.Subtract(from).Days + 1)
-                .Select(d => from.AddDays(d))
-                .Select(async d =>
+            // XXX ひたすらダサい
+            var results = new List<Bme280Data>();
+            foreach (var d in Enumerable.Range(0, to.Subtract(from).Days + 1).Select(d => from.AddDays(d)))
+            {
+                IEnumerable<string> stream;
+                try
                 {
-                    // XXX ファイルレベルで死んだら捨ててもいい気はする
-                    try
+                    var file = await GetFile(d);
+                    // XXX これ、IEnumerableでなくIListなの？
+                    stream = await FileIO.ReadLinesAsync(file);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex);
+                    continue;
+                }
+                foreach (var item in stream.Select(x =>
                     {
-                        var file = await GetFile(d);
-                        var stream = await FileIO.ReadLinesAsync(file);
-
-                        return stream.Select(x =>
-                            {
-                                try
-                                {
-
-                                    return FromCsv(x);
-                                }
-                                catch (Exception)
-                                {
-                                    return new Bme280Data(0, 0, 0, DateTime.MinValue);
-                                }
-                            })
-                            .Where(x => x.Timestamp >= from && x.Timestamp < to);
-                    }
-                    catch (Exception)
-                    {
-                        return new List<Bme280Data>();
-                    }
-                })
-                // XXX SelectMany で同期化しないとこける
-                .SelectMany(x => x.Result);
+                        try
+                        {
+                            return FromCsv(x);
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.WriteLine(ex);
+                            return new Bme280Data(0, 0, 0, DateTime.MinValue);
+                        }
+                    }).Where(x => x.Timestamp >= from && x.Timestamp < to))
+                {
+                    results.Add(item);
+                }
+            }
+            return results;
         }
 
         private async Task<StorageFile> GetFile(DateTime target)
