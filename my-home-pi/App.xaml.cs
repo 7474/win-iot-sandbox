@@ -42,6 +42,8 @@ namespace my_home_pi
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
+            // XXX 登録処理の場所
+            Startup.LaunchBme280LogTask();
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
             {

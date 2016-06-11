@@ -49,6 +49,7 @@ namespace bme280_service
             var messageDefferal = args.GetDeferral();
             var message = args.Request.Message;
             string command = message["Command"] as string;
+            // XXX たぶん型が対応していない。JSONなんかで受けてやるのがいいのかな？
             var from = message["From"] as DateTime?;
             var to = message["To"] as DateTime?;
 

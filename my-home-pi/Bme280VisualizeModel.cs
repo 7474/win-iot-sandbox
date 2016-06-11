@@ -39,9 +39,9 @@ namespace my_home_pi
 
         private Bme280Data _bme280Data;
         private PlotModel _plot;
-        private ICollection<Bme280PlotData> _plotLogs;
+        private IList<Bme280PlotData> _plotLogs;
 
-        private AppServiceConnection appServiceConnection;
+        ThreadPoolTimer _refreshTimer;
         public Bme280VisualizeModel(TimeSpan refreshUnit, TimeSpan displayUnit)
         {
             SensorData = new Bme280Data(0, 0, 0, DateTime.Now);
@@ -111,45 +111,29 @@ namespace my_home_pi
             });
             Plot = plot;
 
-            Task.Run(async () =>
-            {
-                // Initialize the AppServiceConnection
-                appServiceConnection = new AppServiceConnection();
-                appServiceConnection.PackageFamilyName = "my-home-pi_pkqjh7cxnkz54";
-                appServiceConnection.AppServiceName = "bme280-service";
+            _refreshTimer = ThreadPoolTimer.CreatePeriodicTimer(async (source) =>
+             {
+                 await updateSensorData(DateTime.UtcNow.AddDays(-1), DateTime.UtcNow);
+             }, RefreshUnit);
+        }
 
-                // Send a initialize request 
-                var res = await appServiceConnection.OpenAsync();
-                if (res != AppServiceConnectionStatus.Success)
-                {
-                    throw new Exception("Failed to connect to the AppService");
-                }
-            });
-            ThreadPoolTimer PeriodicTimer = ThreadPoolTimer.CreatePeriodicTimer(async (source) =>
+        private async Task updateSensorData(DateTime from, DateTime to)
+        {
+            var dataList = await new Bme280LocalRepository().GetList(from, to);
+            if (dataList != null && dataList.Any())
             {
-                // XXX ValueSet が対応するのは Serializable じゃないといけない予感
-                //var message = new ValueSet();
-                //message.Add("Command", "Query");
-                //message.Add("From", (DateTime?)DateTime.UtcNow.AddDays(-1));
-                //message.Add("To", (DateTime?)DateTime.UtcNow);
-                //var response = await appServiceConnection.SendMessageAsync(message);
-                //var responseData = response.Message["Response"] as ICollection<Bme280Data>;
-                var responseData = await new Bme280LocalRepository().GetList(DateTime.UtcNow.AddDays(-1), DateTime.UtcNow);
-                if (responseData != null && responseData.Any())
+                // XXX ださみ
+                lock (_plotLogs)
                 {
-                    // XXX ださみ
-                    lock (_plotLogs)
+                    _plotLogs.Clear();
+                    foreach (var item in dataList.Select(x => new Bme280PlotData(x)))
                     {
-                        _plotLogs.Clear();
-                        foreach (var item in responseData.Select(x => new Bme280PlotData(x)))
-                        {
-                            _plotLogs.Add(item);
-                        }
+                        _plotLogs.Add(item);
                     }
-                    SensorData = responseData.Last();
-                    Plot.InvalidatePlot(true);
                 }
-            }, RefreshUnit);
+                SensorData = dataList.Last();
+                Plot.InvalidatePlot(true);
+            }
         }
     }
 

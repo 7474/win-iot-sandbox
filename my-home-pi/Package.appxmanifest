@@ -21,9 +21,12 @@
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
       <Extensions>
-        <uap:Extension Category="windows.appService" EntryPoint="bme280_service.Bme280LogService">
-          <uap:AppService Name="bme280-service" />
-        </uap:Extension>
+        <Extension Category="windows.backgroundTasks" EntryPoint="bme280_service.Bme280LogService">
+          <BackgroundTasks>
+            <Task Type="systemEvent" />
+            <Task Type="timer" />
+          </BackgroundTasks>
+        </Extension>
       </Extensions>
     </Application>
   </Applications>
