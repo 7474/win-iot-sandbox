@@ -1,0 +1,8 @@
+﻿<Application
+    x:Class="winiot_i2c_checker.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:winiot_i2c_checker"
+    RequestedTheme="Light">
+
+</Application>
