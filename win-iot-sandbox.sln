@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "l-chika-pwm", "l-chika-pwm\l-chika-pwm.csproj", "{288979EC-BD57-4CA6-AA95-CFE65C8CA7B5}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bme280-visualize", "bme280-visualize\bme280-visualize.csproj", "{022341B8-D7FF-4815-94B4-BE32F5A325DB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bme280Uwp", "win-bme280\Bme280Uwp\Bme280Uwp.csproj", "{7536DCC8-AB54-4422-8BA9-44F0961949B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "okiagarikobosi", "okiagarikobosi\okiagarikobosi.csproj", "{253759ED-BDD0-4AA5-936F-259F1C4FAE1D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,6 +95,26 @@ Global
 		{7536DCC8-AB54-4422-8BA9-44F0961949B1}.Release|x64.Build.0 = Release|x64
 		{7536DCC8-AB54-4422-8BA9-44F0961949B1}.Release|x86.ActiveCfg = Release|x86
 		{7536DCC8-AB54-4422-8BA9-44F0961949B1}.Release|x86.Build.0 = Release|x86
+		{253759ED-BDD0-4AA5-936F-259F1C4FAE1D}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{253759ED-BDD0-4AA5-936F-259F1C4FAE1D}.Debug|ARM.ActiveCfg = Debug|ARM
+		{253759ED-BDD0-4AA5-936F-259F1C4FAE1D}.Debug|ARM.Build.0 = Debug|ARM
+		{253759ED-BDD0-4AA5-936F-259F1C4FAE1D}.Debug|ARM.Deploy.0 = Debug|ARM
+		{253759ED-BDD0-4AA5-936F-259F1C4FAE1D}.Debug|x64.ActiveCfg = Debug|x64
+		{253759ED-BDD0-4AA5-936F-259F1C4FAE1D}.Debug|x64.Build.0 = Debug|x64
+		{253759ED-BDD0-4AA5-936F-259F1C4FAE1D}.Debug|x64.Deploy.0 = Debug|x64
+		{253759ED-BDD0-4AA5-936F-259F1C4FAE1D}.Debug|x86.ActiveCfg = Debug|x86
+		{253759ED-BDD0-4AA5-936F-259F1C4FAE1D}.Debug|x86.Build.0 = Debug|x86
+		{253759ED-BDD0-4AA5-936F-259F1C4FAE1D}.Debug|x86.Deploy.0 = Debug|x86
+		{253759ED-BDD0-4AA5-936F-259F1C4FAE1D}.Release|Any CPU.ActiveCfg = Release|x86
+		{253759ED-BDD0-4AA5-936F-259F1C4FAE1D}.Release|ARM.ActiveCfg = Release|ARM
+		{253759ED-BDD0-4AA5-936F-259F1C4FAE1D}.Release|ARM.Build.0 = Release|ARM
+		{253759ED-BDD0-4AA5-936F-259F1C4FAE1D}.Release|ARM.Deploy.0 = Release|ARM
+		{253759ED-BDD0-4AA5-936F-259F1C4FAE1D}.Release|x64.ActiveCfg = Release|x64
+		{253759ED-BDD0-4AA5-936F-259F1C4FAE1D}.Release|x64.Build.0 = Release|x64
+		{253759ED-BDD0-4AA5-936F-259F1C4FAE1D}.Release|x64.Deploy.0 = Release|x64
+		{253759ED-BDD0-4AA5-936F-259F1C4FAE1D}.Release|x86.ActiveCfg = Release|x86
+		{253759ED-BDD0-4AA5-936F-259F1C4FAE1D}.Release|x86.Build.0 = Release|x86
+		{253759ED-BDD0-4AA5-936F-259F1C4FAE1D}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
