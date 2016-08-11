@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="my-home-pi" Publisher="CN=koudenpa" Version="1.0.0.0" />
-  <mp:PhoneIdentity PhoneProductId="b9a3506b-fcb8-4252-b1be-96338827a517" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:iot="http://schemas.microsoft.com/appx/manifest/iot/windows10" IgnorableNamespaces="uap mp iot">
+  <Identity Name="bme280-sensing-service" Publisher="CN=koudenpa" Version="1.0.0.0" />
+  <mp:PhoneIdentity PhoneProductId="a25c2b6e-6d0a-44ce-8cc1-e2df61657a9f" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>my-home-pi</DisplayName>
+    <DisplayName>bme280-sensing-service</DisplayName>
     <PublisherDisplayName>koudenpa</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -14,8 +14,8 @@
     <Resource Language="x-generate" />
   </Resources>
   <Applications>
-    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="my_home_pi.App">
-      <uap:VisualElements DisplayName="my-home-pi" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="my-home-pi" BackgroundColor="transparent">
+    <Application Id="App">
+      <uap:VisualElements DisplayName="bme280-sensing-service" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="bme280-sensing-service" BackgroundColor="transparent" AppListEntry="none">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png">
         </uap:DefaultTile>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
@@ -23,9 +23,9 @@
       <Extensions>
         <Extension Category="windows.backgroundTasks" EntryPoint="bme280_service.Bme280LogService">
           <BackgroundTasks>
-            <Task Type="systemEvent" />
             <Task Type="timer" />
             <Task Type="deviceUse" />
+            <iot:Task Type="startup" />
           </BackgroundTasks>
         </Extension>
       </Extensions>

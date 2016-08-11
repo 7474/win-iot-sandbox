@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.AppService;
 using Windows.ApplicationModel.Background;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 
 namespace bme280_service
 {
@@ -24,6 +25,9 @@ namespace bme280_service
         public async void Run(IBackgroundTaskInstance taskInstance)
         {
             serviceDeferral = taskInstance.GetDeferral();
+            await FileIO.AppendLinesAsync(
+                            await ApplicationData.Current.LocalFolder.CreateFileAsync("service-log.txt", CreationCollisionOption.OpenIfExists),
+                            new string[] { "Run, " + DateTime.Now });
 
             _summaryUnit = TimeSpan.FromMinutes(1);
             _poolData = new List<Bme280Data>();
